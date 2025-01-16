@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Your Rooms</h1>
+    <div class="row g-3">
+        {% for room in rooms %}
+            <div class="col-md-4 col-lg-2">
+                <a href="{% url 'chat:room' room_name=room.name %}" 
+                   class="btn btn-primary btn-lg w-100 d-flex align-items-center justify-content-center text-truncate"
+                   style="height: 100px; font-size: 18px;">
+                    {{ room.name }}
+                </a>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center" role="alert">
+                    <p>You are not a member of any rooms.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

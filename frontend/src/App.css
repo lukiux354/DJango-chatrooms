@@ -1,0 +1,132 @@
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f6f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Main container */
+.container {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+}
+
+/* Chat area */
+.messages-container {
+  overflow-y: auto;
+  max-height: 400px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #e1f7d5;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+li:nth-child(odd) {
+  background-color: #cce7ff;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* Input field and Send button */
+input[type='text'] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Add User Section */
+.add-user-section {
+  margin-top: 20px;
+}
+
+/* Users List */
+.users-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.users-list li {
+  padding: 10px;
+  background-color: #f0f0f0;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.users-list li:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+/* Room buttons */
+.rooms-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.room-button {
+  background-color: #28a745;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.room-button:hover {
+  background-color: #218838;
+}
+
+.room-button:active {
+  background-color: #1e7e34;
+}
+

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %} Create a New Channel {% endblock %}
+
+{% block content %}
+<h1>Create a New Channel</h1>
+<form action="{% url 'chat:create_channel' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Create Channel</button>
+</form>
+{% endblock %}

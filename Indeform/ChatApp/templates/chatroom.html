@@ -1,0 +1,206 @@
+<!--
+{% extends "base.html" %}
+
+{% block title %} Chat page {% endblock %}
+
+{% block content %}
+<h1>Chat page: "{{ room.name }}"</h1>
+{% endblock %}
+
+{% block script %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1" class="h4 pt-5">Chatroom</label>
+                    <textarea class="form-control" id="chat-text" rows="10" readonly></textarea><br>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="input" type="text" placeholder="Type your message"></br>
+                </div>
+                <input class="btn btn-secondary btn-lg btn-block" id="chat-message-submit" type="button" value="Send">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Form for adding a user to the channel (only if user is the creator) -->
+<!--
+{% if user == room.creator %}
+    <div class="container mt-5">
+        <h3>Add a User to the Channel</h3>
+        <form method="post" action="{% url 'chat:add_user_to_channel' room_name=room_name %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username" class="h5">Enter a username</label>
+                <input type="text" name="username" id="username" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+{% endif %}
+
+<!-- Show list of users -->
+<!--
+<div class="container mt-5">
+    <h3>Users in this channel:</h3>
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <span>{{ user }}</span>
+            </li>
+        {% empty %}
+            <p>No users in this channel yet.</p>
+        {% endfor %}
+    </ul>
+</div>
+
+{{ room_name|json_script:"room-name" }}
+{{ request.user.username|json_script:"user_username" }}
+
+<script>
+    const user_username = JSON.parse(document.getElementById('user_username').textContent);
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#input');
+        const message = messageInputDom.value.trim();  // Trim any leading or trailing spaces
+
+        if (message === "") {
+            // Don't send empty message and possibly show a warning
+            alert("Message cannot be empty!");
+            return;  // Exit the function
+        }
+
+        // Send the message if it's not empty
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': user_username,
+        }));
+
+        // Clear the input field
+        messageInputDom.value = '';
+    };
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomName
+        + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const chatText = document.querySelector('#chat-text');
+        
+        const formattedMessage = `[${data.timestamp}] ${data.username}: ${data.message}\n`;
+        chatText.innerHTML += formattedMessage;
+    };
+    
+</script>
+
+{% endblock %}
+-->
+
+{% extends "base.html" %}
+
+{% block title %} Chat page {% endblock %}
+
+{% block content %}
+<h1>Chat page: "{{ room.name }}"</h1>
+{% endblock %}
+
+{% block script %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1" class="h4 pt-5">Chatroom</label>
+                    <textarea class="form-control" id="chat-text" rows="10" readonly></textarea><br>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="input" type="text" placeholder="Type your message"></br>
+                </div>
+                <input class="btn btn-secondary btn-lg btn-block" id="chat-message-submit" type="button" value="Send">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Form for adding a user to the channel (only if user is the creator) -->
+{% if user == room.creator %}
+    <div class="container mt-5">
+        <h3>Add a User to the Channel</h3>
+        <form method="post" action="{% url 'chat:add_user_to_channel' room_name=room.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username" class="h5">Enter a username</label>
+                <input type="text" name="username" id="username" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+{% endif %}
+
+<!-- Show list of users -->
+<div class="container mt-5">
+    <h3>Users in this channel:</h3>
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <span>{{ user }}</span> <!-- Changed to non-clickable text -->
+            </li>
+        {% empty %}
+            <p>No users in this channel yet.</p>
+        {% endfor %}
+    </ul>
+</div>
+
+{{ room.id|json_script:"room-id" }}
+{{ request.user.username|json_script:"user_username" }}
+
+<script>
+    const user_username = JSON.parse(document.getElementById('user_username').textContent);
+    const roomId = JSON.parse(document.getElementById('room-id').textContent);
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#input');
+        const message = messageInputDom.value.trim();  // Trim any leading or trailing spaces
+
+        if (message === "") {
+            // Don't send empty message and possibly show a warning
+            alert("Message cannot be empty!");
+            return;  // Exit the function
+        }
+
+        // Send the message if it's not empty
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': user_username,
+        }));
+
+        // Clear the input field
+        messageInputDom.value = '';
+    };
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomId
+        + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const chatText = document.querySelector('#chat-text');
+        
+        const formattedMessage = `[${data.timestamp}] ${data.username}: ${data.message}\n`;
+        chatText.innerHTML += formattedMessage;
+    };
+</script>
+
+{% endblock %}
