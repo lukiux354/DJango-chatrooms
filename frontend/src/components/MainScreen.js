@@ -25,6 +25,7 @@ function MainScreen() {
       //alert('Room created');
       setRoomName('');
       window.location.href = ``;
+      alert('Room created successfully');
     } catch (err) {
       alert('Error creating room');
     }
